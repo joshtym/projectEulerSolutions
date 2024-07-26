@@ -100,3 +100,42 @@ std::vector<unsigned int> calculateSeiveUpToNumber(unsigned int maxNumber)
 
    return primes;
 }
+
+// Finalized solution involving the whole vector of numbers
+std::string addVectorOfStringNumbers(std::vector<std::string> allNumbers)
+{
+   int carryOver = 0;
+   char numbers[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+   auto largestElement = *(std::max_element(allNumbers.begin(), allNumbers.end(), [](std::string numOne, std::string numTwo) 
+   {
+      return numOne.length() < numTwo.length();
+   }));
+   
+   int maxLength = largestElement.length();
+   std::string sum = "";
+
+   for (int i = 0; i < maxLength; ++i)
+   {
+      int numericSum = carryOver;
+      for (int j = 0; j < allNumbers.size(); ++j)
+      {
+         // The character numeric digits are converted to int as follows:
+         // '0' = 48, '1' = 49, '2' = 50, etc. So, we minus 48 from the numeric sum on conversion
+         char digit = i < allNumbers[j].length() ? allNumbers[j][allNumbers[j].length() - 1 - i] : '0';
+         numericSum += (int)digit - 48;
+      }
+
+      carryOver = numericSum / 10;
+      numericSum = numericSum % 10;
+      sum = numbers[numericSum] + sum;
+   }
+
+   while (carryOver != 0)
+   {
+      int val = carryOver % 10;
+      carryOver = carryOver / 10;
+      sum = numbers[val] + sum;
+   }
+
+   return sum;
+}
