@@ -6,8 +6,9 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "g++ -o sol1 sol1.cc; ./sol1",
+            "command": "g++",
             "args": [
+                "-g", "sol3.cc"
             ],
             "group": "build",
             "presentation": {

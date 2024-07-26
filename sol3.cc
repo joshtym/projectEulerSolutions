@@ -1,21 +1,22 @@
 #include <iostream>
+#include <cmath>
 #include "utilityFuncs.h"
 
-int getLargestPrimeFactor(long long int);
+long long int getLargestPrimeFactor(long long int);
 
 int main(int argc, char** argv)
 {
-   std::cout << getLargestPrimeFactor(5000000) << std::endl;
+   std::cout << getLargestPrimeFactor(600851475143) << std::endl;
    return 0;
 }
 
-int getLargestPrimeFactor(long long int num)
+long long int getLargestPrimeFactor(long long int num)
 {
-	std::vector<long long int> primes = getPrimesUpToNumber(num);
+   std::vector<long long int> primes = getPrimeFactors(num, 2);
 
-	for (auto rit = primes.rbegin(); rit != primes.rend(); ++rit)
-		if (num % *rit == 0)
-			return *rit;
-	
-	return num;
+   for (auto rit = primes.rbegin(); rit != primes.rend(); ++rit)
+      if (num % *rit == 0)
+         return *rit;
+   
+   return num;
 }

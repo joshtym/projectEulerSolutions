@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/euler",
+            "program": "${workspaceFolder}/sol3",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
