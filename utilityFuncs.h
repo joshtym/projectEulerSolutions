@@ -41,3 +41,17 @@ std::vector<long long int> getPrimeFactors(long long int number, int startCheckN
 
    return primeFactors;
 }
+
+// Function to determine if a number is a palindrome
+bool isNumberPalindrome(int number)
+{
+	auto numberAsString = std::to_string(number);
+	auto startIndex = 0;
+	auto endIndex = numberAsString.length() - 1;
+	
+	while(startIndex < endIndex)
+		if (numberAsString[startIndex++] != numberAsString[endIndex--])
+			return false;
+		
+	return true;
+}
