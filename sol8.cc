@@ -10,8 +10,7 @@ int main(int argc, char** argv)
    return 0;
 }
 
-// Solution to EULER #8 would need to use GMP or read as a string (but this might not handle large enough multiplication)
-// TODO: Write a DP solution to this
+// Solution to EULER #8
 long long int findAdjacentNumberMultiplicationMax(std::string numAsString, int adjacentDigits)
 {
    long long int maxMultiplier = 0;
@@ -19,8 +18,11 @@ long long int findAdjacentNumberMultiplicationMax(std::string numAsString, int a
    for (int i = 0; i < numAsString.size(); ++i)
    {
       long long int tmpMultipliedNum = 1;
-      for (int j = i; j < i + 12; ++j)
+      for (int j = i; j < i + adjacentDigits; ++j)
       {
+         if (tmpMultipliedNum == 0)
+            break;
+         
          tmpMultipliedNum *= atoi(numAsString.substr(j,1).c_str());
       }
       maxMultiplier = std::max(maxMultiplier, tmpMultipliedNum);
