@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <climits>
+#include <memory>
 
 // Use of the seive for finding primes up to a number (needs to be adjusted as it does not work for large numbers)
 // Note that this only works for the set of integers and is good enough
@@ -64,39 +65,39 @@ bool isNumberPalindrome(int number)
    return true;
 }
 
+// TODO: Remove containered prime function
+std::unique_ptr<bool[]> seiveUpToNumber(unsigned int maxNumber)
+{
+   std::unique_ptr<bool[]> primes = std::make_unique<bool[]>(maxNumber + 1);
+   double sqrtOfNumber = sqrt(maxNumber);
+
+   primes[0] = false;
+   primes[1] = false;
+
+   for (unsigned int i = 2; i <= maxNumber; ++i)
+      primes[i] = true;
+
+   for (unsigned int i = 2; i <= sqrtOfNumber; ++i)
+   {
+      if (!primes[i])
+         continue;
+      
+      for (unsigned int j = i + i; j <= maxNumber; j += i)
+         primes[j] = false;
+   }
+
+   return primes;
+}
+
 // Utility function to get all the primes up to a number (this function only works for unsigned max int)
 std::vector<unsigned int> calculateSeiveUpToNumber(unsigned int maxNumber)
 {
    std::vector<unsigned int> primes;
-   double sqrtOfNumber = sqrt(maxNumber);
-   unsigned int indexOfEndOfComparingPrimes = 0;
-   bool isPrime;
-   unsigned int startingIndex;
+   std::unique_ptr<bool[]> primeIndicators = seiveUpToNumber(maxNumber);
 
-   if (maxNumber < 2)
-      return primes;
-
-   primes.push_back(2);
-
-   for (unsigned int i = 3; i <= maxNumber; ++i)
-   {
-      isPrime = true;
-      startingIndex = 0;
-      while (startingIndex <= indexOfEndOfComparingPrimes)
-      {
-         if (i % primes[startingIndex++] == 0)
-         {
-            isPrime = false;
-            break;
-         }
-      }
-
-      if (isPrime)
-      {
+   for (unsigned int i = 0; i <= maxNumber; ++i)
+      if (primeIndicators[i])
          primes.push_back(i);
-         indexOfEndOfComparingPrimes += (i <= sqrtOfNumber);
-      }
-   }
 
    return primes;
 }

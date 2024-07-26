@@ -12,8 +12,11 @@ int main(int argc, char** argv)
 // Solution to EULER #10
 long long int getSumOrPrimesBelowANumber(unsigned int number)
 {
-   std::vector<unsigned int> primes = calculateSeiveUpToNumber(number);
+   std::unique_ptr<bool[]> primes = seiveUpToNumber(number);
    long long unsigned int sum = 0;
-   for_each(primes.begin(), primes.end(), [&](unsigned int prime){sum += prime;});
+
+   for (int i = 0; i <= number; ++i)
+      sum += primes[i] ? i : 0;
+      
    return sum;
 }

@@ -23,22 +23,25 @@ int getProductOfCoefficientsForQuadraticPrimes(int upperBound)
    int numOfLinePrintouts = 0;
    int lines = 0;
 
-   std::vector<unsigned int> primesUpToNumber = calculateSeiveUpToNumber(upperBound);
+   std::unique_ptr<bool[]> primesUpToNumber = seiveUpToNumber(upperBound);
 
-   for (int i = 0; i < primesUpToNumber.size(); ++i)
+   for (int i = 0; i < upperBound; ++i)
    {
+      if (!primesUpToNumber[i])
+         continue;
+      
       for (int j = (upperBound - 1) * -1; j < upperBound - 1; ++j)
       {
          int n = 0;
 
-         while (isPrime(pow(n, 2) + j * n + primesUpToNumber[i]))
+         while (isPrime(pow(n, 2) + j * n + i))
             n++;
          
          if (n > consecutivePrimes)
          {
             consecutivePrimes = n;
             coefficientA = j;
-            coefficientB = primesUpToNumber[i];
+            coefficientB = i;
          }
       }
    }
