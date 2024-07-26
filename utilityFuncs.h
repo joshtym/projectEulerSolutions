@@ -1,37 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <map>
+#include <algorithm>
 
 // Use of the seive for finding primes (this can be optimized)
 std::vector<long long int> getPrimesUpToNumber(long long int number)
 {
-   auto sqrtOfNumber = floor(sqrt(number));
-   std::map<long long int, bool> numberToPrimeMap;
-   std::vector<long long int> primes;
+   long double sqrtOfNumber = sqrt(number);
+   std::vector<long long int> primes = {3};
+   std::vector<long long int> additionalPrimes;
 
-   for (long long int i = 1; i <= number; ++i)
-      numberToPrimeMap[i] = true;
-   
-   numberToPrimeMap[1] = false;
-
-   for (long long int i = 2; i <= sqrtOfNumber; ++i)
-   {
-      for (long long int j = 2; j < i; ++j)
-         if (numberToPrimeMap[j] && i % j == 0)
-         {
-            numberToPrimeMap[i] = false;
-            break;
-         }
-
-      if (numberToPrimeMap[i])
-         for (long long int j = i + i; j <= number; j += i)
-            numberToPrimeMap[j] = false;
-   }
-
-   for (long long int i = 1; i <= number; ++i)
-      if (numberToPrimeMap[i])
+   for (long long int i = 3; i <= sqrtOfNumber; ++i)
+      if (std::all_of(primes.begin(), primes.end(), [](long long int prime){return i % prime != 0;})
          primes.push_back(i);
+         
+   for (long long int = floor(sqrtOfNumber) + 1; i <= number; ++i)
+      if (std::all_of(primes.begin(), primes.end(), [](long long int prime){return i % prime != 0;})
+         additionalPrimes.push_back(i);
+            
+    primes.insert(primes.end(), additionalPrimes.begin(), additionalPrimes.end());
 
    return primes;
 }
