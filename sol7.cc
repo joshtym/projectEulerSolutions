@@ -10,6 +10,7 @@ int main(int argc, char** argv)
 }
 
 // Solution for EULER #7
+// TODO: Readjust for using the seive
 int getNumberedPrime(int number)
 {
    return getNumberedPrimes(number)[number - 1];

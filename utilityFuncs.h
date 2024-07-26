@@ -53,13 +53,50 @@ std::vector<long long int> getPrimeFactors(long long int number, int startCheckN
 // Function to determine if a number is a palindrome
 bool isNumberPalindrome(int number)
 {
-	auto numberAsString = std::to_string(number);
-	auto startIndex = 0;
-	auto endIndex = numberAsString.length() - 1;
-	
-	while(startIndex < endIndex)
-		if (numberAsString[startIndex++] != numberAsString[endIndex--])
-			return false;
-		
-	return true;
+   auto numberAsString = std::to_string(number);
+   auto startIndex = 0;
+   auto endIndex = numberAsString.length() - 1;
+   
+   while(startIndex < endIndex)
+      if (numberAsString[startIndex++] != numberAsString[endIndex--])
+         return false;
+      
+   return true;
+}
+
+// Utility function to get all the primes up to a number (this function only works for unsigned max int)
+std::vector<unsigned int> calculateSeiveUpToNumber(unsigned int maxNumber)
+{
+   std::vector<unsigned int> primes;
+   double sqrtOfNumber = sqrt(maxNumber);
+   unsigned int indexOfEndOfComparingPrimes = 0;
+   bool isPrime;
+   unsigned int startingIndex;
+
+   if (maxNumber < 2)
+      return primes;
+
+   primes.push_back(2);
+
+   for (unsigned int i = 3; i <= maxNumber; ++i)
+   {
+      isPrime = true;
+      startingIndex = 0;
+      while (startingIndex <= indexOfEndOfComparingPrimes)
+      {
+         if (i % primes[startingIndex++] == 0)
+         {
+            isPrime = false;
+            break;
+         }
+      }
+
+      if (isPrime)
+      {
+         primes.push_back(i);
+         indexOfEndOfComparingPrimes += (i <= sqrtOfNumber);
+      }
+   }
+
+   return primes;
 }
