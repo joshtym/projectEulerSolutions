@@ -2,16 +2,24 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <climits>
 
 // Use of the seive for finding primes up to a number (needs to be adjusted as it does not work for large numbers)
-std::vector<long long int> getPrimesUpToNumber(long long int number)
+// Note that this only works for the set of integers and is good enough
+// TODO: Optimize this
+std::vector<int> getNumberedPrimes(int size)
 {
-   long double sqrtOfNumber = sqrt(number);
-   std::vector<long long int> primes = {2};
+   long double sqrtOfNumber = sqrt(INT_MAX);
+   std::vector<int> primes = {2};
 
-   for (long long int i = 3; i <= number; ++i)
-      if (std::all_of(primes.begin(), primes.end(), [&](long long int prime){return i%prime != 0;}))
+   for (int i = 3; i <= INT_MAX; ++i)
+   {
+      if (primes.size() == size)
+         break;
+
+      if (std::all_of(primes.begin(), primes.end(), [&](int prime){return i%prime != 0;}))
          primes.push_back(i);
+   }
 
    return primes;
 }
