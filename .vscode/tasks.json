@@ -6,9 +6,9 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "g++",
+            "command": "g++ -o euler",
             "args": [
-                "-g", "sol3.cc"
+                "sol9.cc"
             ],
             "group": "build",
             "presentation": {
